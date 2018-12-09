@@ -1,6 +1,6 @@
 # LGIS
 Based on cesium 3D GIS platform, support WMTS WFS PBF MVT , OSGB……
-##运行简介
+## 运行简介
 该工程基于Vue开发。运行步骤如下
 1.下载node.js并安装
 2.在项目路径 运行 npm install，安装需要依赖
