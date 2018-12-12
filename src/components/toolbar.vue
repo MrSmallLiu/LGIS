@@ -40,7 +40,7 @@
             };
         },
         mounted: function () {
-            console.log("csf");
+            console.log("23");
             this.viewer = new window.Cesium.Viewer("mapContent", {
                 imageryProvider: new window.Cesium.WebMapTileServiceImageryProvider({
                     url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
