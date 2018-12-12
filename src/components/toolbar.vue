@@ -44,6 +44,7 @@ export default {
     };
   },
   mounted: function() {
+      console.log("dg")
     this.viewer = new window.Cesium.Viewer("mapContent", {
       imageryProvider: new window.Cesium.WebMapTileServiceImageryProvider({
         url:
