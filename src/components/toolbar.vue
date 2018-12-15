@@ -2,7 +2,7 @@
     <div class="layout">
         <Layout :style="{height: '100%'}">
             <Header>
-                <Menu active-name="tdt" mode="horizontal" theme="dark" v-on:on-select="changeLayer">
+                <Menu active-name="tdt" mode="horizontal" theme="dark" v-on:on-select="getSelName">
                     <div class="layout-logo"></div>
                     <div class="layout-nav">
                         <Submenu name="baselayerChange" style="font-size:16px">
@@ -17,7 +17,7 @@
                 </Menu>
             </Header>
             <Layout>
-                <LayerControl></LayerControl> 
+                <LayerControl :selLayer="selLayer" :viewer="viewer"></LayerControl>
                 <Sider hide-trigger :style="{background: '#fff'}">
                 </Sider>
                 <Layout>
@@ -40,11 +40,11 @@ export default {
   props: {},
   data() {
     return {
-      viewer: null
+      viewer: null,
+      selLayer:"tdt"
     };
   },
   mounted: function() {
-      console.log("d7")
     this.viewer = new window.Cesium.Viewer("mapContent", {
       imageryProvider: new window.Cesium.WebMapTileServiceImageryProvider({
         url:
@@ -66,47 +66,12 @@ export default {
       fullscreenButton: false,
       navigationInstructionsInitiallyVisible: false
     });
+
     this.viewer._cesiumWidget._creditContainer.style.display = "none";
   },
   methods: {
-    changeLayer: function(layerID) {
-      this.viewer.imageryLayers.removeAll();
-      switch (layerID) {
-        case "tdt":
-          this.viewer.imageryLayers.addImageryProvider(
-            new window.Cesium.WebMapTileServiceImageryProvider({
-              url:
-                "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
-              layer: "tdtBasicLayer",
-              style: "default",
-              format: "image/jpeg",
-              tileMatrixSetID: "GoogleMapsCompatible",
-              show: false,
-              maximumLevel: 16
-            })
-          );
-          break;
-        case "gg":
-          let url =
-            "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali";
-          this.viewer.imageryLayers.addImageryProvider(
-            new window.Cesium.UrlTemplateImageryProvider({
-              url: url
-            })
-          );
-          break;
-        case "arcgis":
-          this.viewer.imageryLayers.addImageryProvider(
-            new window.Cesium.ArcGisMapServerImageryProvider({
-              url:
-                "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
-              enablePickFeatures: false
-            })
-          );
-          break;
-        default:
-          break;
-      }
+    getSelName: function(layerID) {
+      this.selLayer=layerID;
     }
   }
 };

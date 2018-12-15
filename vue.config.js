@@ -9,6 +9,9 @@ const cesiumThirdParty = '../Build/Cesium/ThirdParty';
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+    devServer: {
+        open: true
+    },
     configureWebpack: {
         context: __dirname,
         // 为 cesium 模块创建别名，更方便进行 import 和 require
