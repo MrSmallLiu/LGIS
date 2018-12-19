@@ -10,8 +10,7 @@
   export default {
     name: "app",
     components: {
-      Home,
-      LayerControl
+      Home
     }
   };
 </script>
