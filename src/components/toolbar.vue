@@ -10,17 +10,36 @@
               <template slot="title">
                 <Icon type="logo-buffer" size='28' />底图切换
               </template>
-              <MenuItem name="tdt">天地图</MenuItem>
-              <MenuItem name="gg">谷歌</MenuItem>
-              <MenuItem name="arcgis">ArcGIS Online</MenuItem>
+              <MenuItem name="天地图底图">天地图</MenuItem>
+              <MenuItem name="谷歌底图">谷歌</MenuItem>
+              <MenuItem name="ArcGIS底图">ArcGIS Online</MenuItem>
+            </Submenu>
+            <Submenu name="addLayer" style="font-size:16px">
+              <template slot="title">
+                <Icon type="logo-buffer" size='28' />添加图层
+              </template>
+              <MenuItem name="WMTS">WMTS</MenuItem>
+              <MenuItem name="OSGB">倾斜摄影</MenuItem>
+            </Submenu>
+            <Submenu name="addGraphic" style="font-size:16px">
+              <template slot="title">
+                <Icon type="logo-buffer" size='28' />标绘
+              </template>
+              <MenuItem name="点">标点</MenuItem>
+              <MenuItem name="线">标线</MenuItem>
+              <MenuItem name="面">表面</MenuItem>
             </Submenu>
           </div>
+
+
+
         </Menu>
       </Header>
       <Layout>
-         <Sider hide-trigger :style="{background: '#fff'}"> 
-         <LayerControl style="width:200px;overflow:auto" :selLayer="selLayer" :viewer="viewer"></LayerControl>
-         </Sider> 
+        <Sider hide-trigger :style="{background: '#fff'}">
+          <LayerControl style="width:200px;overflow:auto" v-on:layerTreeChange="layerTreeChange" :layerData="layerTreeData"
+            :selLayer="selLayer" :viewer="viewer"></LayerControl>
+        </Sider>
         <Layout>
           <Content :style="{height: '100%',  background: '#fff'}">
             <div id="mapContent" style="height:100%">
@@ -43,10 +62,25 @@
     data() {
       return {
         viewer: null,
-        selLayer: "tdt"
+        selLayer: "天地图底图",
+        layerTreeData: [{
+          title: "底图",
+          expand: true,
+          children: [{
+              title: "天地图底图",
+              checked: true
+            },
+            {
+              title: "注记",
+              checked: true
+            }
+          ]
+        }]
       };
     },
     mounted: function () {
+      window.Cesium.Ion.defaultAccessToken =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1YWNkNjZiZC0wYjQ1LTQ4NjQtYTM5OC1lYzhlYmY0MWZlNzQiLCJpZCI6NjE2Mywic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0NTQ2MDQ4MH0.1C-TB8mSOxn_eUDi_S76XqpmnpPqXFsT9q5dsIEAtVE'
       this.viewer = new window.Cesium.Viewer("mapContent", {
         imageryProvider: new window.Cesium.WebMapTileServiceImageryProvider({
           url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
@@ -65,14 +99,34 @@
         baseLayerPicker: false,
         geocoder: false,
         fullscreenButton: false,
-        navigationInstructionsInitiallyVisible: false
+        navigationInstructionsInitiallyVisible: false,
+        // terrainProvider: window.Cesium.createWorldTerrain()
       });
 
       this.viewer._cesiumWidget._creditContainer.style.display = "none";
+      this.viewer.camera.flyTo({
+        destination: window.Cesium.Cartesian3.fromDegrees(116, 39, 8000000)
+      })
     },
     methods: {
       getSelName: function (layerID) {
+        this.layerTreeData = [{
+          title: "底图",
+          expand: true,
+          children: [{
+              title: layerID,
+              checked: true
+            },
+            {
+              title: "注记",
+              checked: true
+            }
+          ]
+        }]
         this.selLayer = layerID;
+      },
+      layerTreeChange(data) {
+        this.layerTreeData = data;
       }
     }
   };
@@ -103,7 +157,7 @@
   }
 
   .layout-nav {
-    width: 420px;
+    width: 520px;
     margin: 0 auto;
     margin-right: 20px;
   }
