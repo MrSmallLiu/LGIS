@@ -18,9 +18,9 @@
         </Menu>
       </Header>
       <Layout>
-        <!-- <Sider hide-trigger :style="{background: '#fff'}"> -->
+       <Sider hide-trigger :style="{background: '#fff'}"> 
         <LayerControl style="width:200px;overflow:auto" :selLayer="selLayer" :viewer="viewer"></LayerControl>
-        <!-- </Sider> -->
+         </Sider> 
         <Layout>
           <Content :style="{height: '100%',  background: '#fff'}">
             <div id="mapContent" style="height:100%">
