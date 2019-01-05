@@ -51,6 +51,9 @@
         methods: {
             changeLayer: function (layerID) {
                 //   console.log(this.GetLayerTreeData);
+                if(layerID!="tdt" ||layerID!="gg"|| layerID!="arcgis"){
+                    return
+                }
                 this.viewer.imageryLayers.removeAll();
                 switch (layerID) {
                     case "天地图底图":

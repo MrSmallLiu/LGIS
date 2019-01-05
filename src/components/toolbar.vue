@@ -25,12 +25,12 @@
               <template slot="title">
                 <Icon type="logo-buffer" size='28' />标绘
               </template>
-              <MenuItem name="点">标点</MenuItem>
-              <MenuItem name="线">标线</MenuItem>
-              <MenuItem name="面">表面</MenuItem>
+              <MenuItem name="point" >标点</MenuItem>
+              <MenuItem name="line">标线</MenuItem>
+              <MenuItem name="polygon">标面</MenuItem>
+              <MenuItem name="clear">清除</MenuItem>
             </Submenu>
           </div>
-
 
 
         </Menu>
@@ -53,6 +53,7 @@
 </template>
 <script>
   import LayerControl from "./layerControl.vue";
+  import draw from "../common/js/draw"
   export default {
     name: "Home",
     components: {
@@ -75,7 +76,8 @@
               checked: true
             }
           ]
-        }]
+        }],
+          drawType:null
       };
     },
     mounted: function () {
@@ -102,7 +104,10 @@
         navigationInstructionsInitiallyVisible: false,
         // terrainProvider: window.Cesium.createWorldTerrain()
       });
-
+      this.$store.commit('setViewer',this.viewer)
+    // console.log(this.$store.state.viewer)
+    //     //this.$store.state.viewer = this.viewer;
+    //     //console.log(this.$store.state.newslist)
       this.viewer._cesiumWidget._creditContainer.style.display = "none";
       this.viewer.camera.flyTo({
         destination: window.Cesium.Cartesian3.fromDegrees(116, 39, 8000000)
@@ -124,10 +129,32 @@
           ]
         }]
         this.selLayer = layerID;
+        //判断选择的是否是标绘
+       if( layerID=="point" || layerID=="line"|| layerID=="polygon" ||layerID=="clear"){
+           this.drawType=layerID;
+       }
       },
       layerTreeChange(data) {
         this.layerTreeData = data;
       }
+    },
+    watch:{
+        drawType(newValue){
+            switch (newValue){
+                case "point":draw.drawPoint(this.$store.state.viewer,function () {
+            });
+                break;
+                case "line":draw.drawLineString(this.$store.state.viewer,function () {
+                });
+                    break;
+                case "polygon":draw.drawPolygon(this.$store.state.viewer,function () {
+                });
+                    break;
+                case "clear":draw.clearHandle(this.$store.state.viewer);
+                    break;
+            }
+
+        }
     }
   };
 </script>

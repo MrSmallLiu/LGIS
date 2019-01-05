@@ -28,7 +28,8 @@ const state = {
                 title: "OSGB"
             }
         ]
-    }]
+    }],
+    viewer:Object
 }
 const getters = {
     GetLayerTreeData: state => state.layerTreeData
@@ -36,6 +37,9 @@ const getters = {
 const mutations = {
     SetLayerTreeData: (state, data) => {
         state.layerTreeData = data;
+    },
+    setViewer:(state,viewer) => {
+        state.viewer=viewer
     }
 }
 // const actions = {}
@@ -46,6 +50,6 @@ export default new Vuex.Store({
     mutations,
     // actions,
     // 严格模式，非法修改state时报错
-    strict: debug,
+    strict: false,
     plugins: debug ? [createLogger()] : []
 })
