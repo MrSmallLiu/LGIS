@@ -49,7 +49,7 @@
     mounted: function () {
       this.viewer = new window.Cesium.Viewer("mapContent", {
         imageryProvider: new window.Cesium.WebMapTileServiceImageryProvider({
-          url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
+          url: "http://t0.tianditu.gov.cn/img_w/wmts?tk=2aa7f0081af9c7cf6c6a60d20335dd99&service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
           layer: "tdtBasicLayer",
           style: "default",
           format: "image/jpeg",

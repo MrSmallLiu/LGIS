@@ -52,7 +52,7 @@
                     case "tdt":
                         this.viewer.imageryLayers.addImageryProvider(
                             new window.Cesium.WebMapTileServiceImageryProvider({
-                                url: "http://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
+                                url: "http://t0.tianditu.com/vec_w/wmts?tk=2aa7f0081af9c7cf6c6a60d20335dd99&service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
                                 //url:"http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
                                 layer: "tdtBasicLayer",
                                 style: "default",
@@ -84,7 +84,7 @@
                         break;
                 }
                 this.viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-                    url: "http://t0.tianditu.com/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
+                    url: "http://t0.tianditu.gov.cn/cva_w/wmts?tk=2aa7f0081af9c7cf6c6a60d20335dd99&service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
                     layer: "tdtAnnoLayer",
                     style: "default",
                     format: "image/jpeg",
