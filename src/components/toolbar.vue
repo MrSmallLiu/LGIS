@@ -53,7 +53,7 @@
 </template>
 <script>
   import LayerControl from "./layerControl.vue";
-  // import draw from "../common/js/draw"
+  import draw from "../common/js/draw"
   export default {
     name: "Home",
     components: {
