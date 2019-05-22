@@ -1,5 +1,5 @@
 <template>
-    <Tree :data="layerData" show-checkbox v-on:on-check-change="layerCheckChange"></Tree>
+    <Tree :data="layerData" show-checkbox v-on:on-check-change="changeLayer"></Tree>
 </template>
 <script>
     import {
@@ -51,7 +51,8 @@
         methods: {
             changeLayer: function (layerID) {
                 //   console.log(this.GetLayerTreeData);
-                if(layerID!="tdt" ||layerID!="gg"|| layerID!="arcgis"){
+                // debugger
+                if(layerID!="天地图底图" && layerID!="谷歌底图" && layerID!="ArcGIS底图"){
                     return
                 }
                 this.viewer.imageryLayers.removeAll();
