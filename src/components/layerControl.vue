@@ -1,5 +1,5 @@
 <template>
-    <Tree :data="layerData" show-checkbox v-on:on-check-change="layerCheckChange"></Tree>
+    <Tree :data="layerData" show-checkbox></Tree>
 </template>
 <script>
     import {
