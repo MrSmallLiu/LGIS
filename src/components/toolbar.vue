@@ -29,7 +29,9 @@
               <MenuItem name="polygon">标面</MenuItem>
               <MenuItem name="clear">清除</MenuItem>
             </Submenu>
-            <MenuItem name="clearPrimitive" size="28">清除</MenuItem>
+            <MenuItem name="clearPrimitive">
+              <Icon type="md-refresh" size="28"/>还原
+            </MenuItem>
           </div>
         </Menu>
       </Header>
@@ -251,6 +253,9 @@ export default {
     },
     removeAllPrimitive() {
       this.viewer.scene.primitives.removeAll();
+      this.viewer.camera.flyTo({
+        destination: window.Cesium.Cartesian3.fromDegrees(116, 39, 8000000)
+      });
     }
   },
   watch: {
