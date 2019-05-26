@@ -18,7 +18,7 @@
                 <Icon type="logo-buffer" size="28"/>添加图层
               </template>
               <MenuItem name="OSGB">倾斜摄影模型</MenuItem>
-              <MenuItem name="WMTS">DEM</MenuItem>
+              <MenuItem name="DEM">DEM</MenuItem>
             </Submenu>
             <Submenu name="addGraphic" style="font-size:16px">
               <template slot="title">
@@ -221,7 +221,7 @@ export default {
       });
     },
     demAdd() {
-      this.osgbModal_is = false;
+      this.demModal_is = false;
       let tileset = new window.Cesium.Cesium3DTileset({
         url: this.osgbUrl
       });
