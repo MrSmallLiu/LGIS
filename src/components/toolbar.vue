@@ -68,13 +68,7 @@
       <!-- <p>After you click ok, the dialog box will close in 2 seconds.</p> -->
       <div>
         DEM地址:
-        <Input v-model="osgbUrl" placeholder="请输入DEM瓦片地址" clearable style="width: 240px"/>
-      </div>
-      <div style="margin-top:18px;">
-        OSGB位置:
-        <Input v-model="osgbLon" placeholder="请输入DEM经度" clearable style="width: 100px"/>
-        <Input v-model="osgbLat" placeholder="请输入DEM纬度" clearable style="width: 100px"/>
-        <Input v-model="osgbHeight" placeholder="请输入DEM高度" clearable style="width: 100px"/>
+        <Input v-model="demUrl" placeholder="请输入DEM瓦片地址" clearable style="width: 240px"/>
       </div>
     </Modal>
   </div>
@@ -93,6 +87,7 @@ export default {
       viewer: null,
       osgbModal_is: false, //倾斜摄影模型的对话框
       demModal_is: false,
+      demUrl: "http://127.0.0.1:8082",
       // osgbModalLoading_is: true, //倾斜摄影模型是否异步
       osgbUrl: "http://127.0.0.1:8081/tiles/tileset.json",
       osgbLon: 116.398207,
@@ -186,7 +181,7 @@ export default {
       if (layerID == "DEM") {
         this.demModal_is = true;
       }
-      if ((layerID = "clearPrimitive")) {
+      if (layerID == "clearPrimitive") {
         this.removeAllPrimitive();
       }
     },
@@ -224,35 +219,21 @@ export default {
     },
     demAdd() {
       this.demModal_is = false;
-      let tileset = new window.Cesium.Cesium3DTileset({
-        url: this.osgbUrl
+      var rectangle = new window.Cesium.Rectangle(
+        window.Cesium.Math.toRadians(112.99962),
+        window.Cesium.Math.toRadians(34.99978),
+        window.Cesium.Math.toRadians(115.999916),
+        window.Cesium.Math.toRadians(38.000076)
+      );
+      var terrainLayer = new window.Cesium.CesiumTerrainProvider({
+        url: this.demUrl
       });
-      // debugger;
-      this.viewer.scene.primitives.add(tileset);
-      let that = this;
-      tileset.readyPromise.then(function() {
-        let position = window.Cesium.Cartesian3.fromDegrees(
-          that.osgbLon,
-          that.osgbLat,
-          that.osgbHeight
-        );
-        let mat = window.Cesium.Transforms.eastNorthUpToFixedFrame(position);
-        let rotationX = window.Cesium.Matrix4.fromRotationTranslation(
-          window.Cesium.Matrix3.fromRotationZ(window.Cesium.Math.toRadians(0))
-        );
-        window.Cesium.Matrix4.multiply(mat, rotationX, mat);
-        tileset._root.transform = mat;
-        that.viewer.camera.flyTo({
-          destination: window.Cesium.Cartesian3.fromDegrees(
-            that.osgbLon,
-            that.osgbLat,
-            that.osgbHeight + 1000
-          )
-        });
-      });
+      this.viewer.terrainProvider = terrainLayer;
+      this.viewer.scene.camera.flyTo({ destination: rectangle });
     },
     removeAllPrimitive() {
       this.viewer.scene.primitives.removeAll();
+      this.viewer.terrainProvider = new window.Cesium.EllipsoidTerrainProvider();
       this.viewer.camera.flyTo({
         destination: window.Cesium.Cartesian3.fromDegrees(116, 39, 8000000)
       });
