@@ -87,7 +87,7 @@ export default {
       viewer: null,
       osgbModal_is: false, //倾斜摄影模型的对话框
       demModal_is: false,
-      demUrl: "http://127.0.0.1:8082",
+      demUrl: "http://127.0.0.1:8081/DEM_tiles",
       // osgbModalLoading_is: true, //倾斜摄影模型是否异步
       osgbUrl: "http://127.0.0.1:8081/tiles/tileset.json",
       osgbLon: 116.398207,
